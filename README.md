@@ -1,0 +1,2 @@
+# java-shopmgr
+Spring + MyBatis
