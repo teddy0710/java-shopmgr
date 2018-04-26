@@ -19,11 +19,11 @@
     <context:component-scan base-package="com.zhangflg.shop"/>
 
     <!--配置数据源的配置，当前使用的是C3P0数据源-->
-    <bean id="dateSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"/>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"/>
 
     <!--配置连接工厂 SQLSessionFactory-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
-          p:dataSource-ref="dateSource">
+          p:dataSource-ref="dataSource">
         <!-- 配置类型别名：采用包扫描的方式到基础包下扫描所有的类，作为MyBatis2能够转换的类型，多个包之间用;分隔 -->
         <property name="typeAliasesPackage">
             <value>
@@ -43,7 +43,7 @@
 
     <!--配置事务管理器-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-          p:dataSource-ref="dateSource"/>
+          p:dataSource-ref="dataSource"/>
 
     <!--声明式事务，使用注解的方式去控制业务层的事务-->
     <tx:annotation-driven transaction-manager="transactionManager"/>

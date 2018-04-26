@@ -108,6 +108,13 @@
       <!-- 指定jar包jdk版本的依赖 -->
       <classifier>jdk15</classifier>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api -->
+    <dependency>
+      <groupId>javax.annotation</groupId>
+      <artifactId>javax.annotation-api</artifactId>
+      <version>1.2</version>
+    </dependency>
+
   </dependencies>
 
   <build>

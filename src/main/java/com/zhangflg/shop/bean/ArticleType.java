@@ -34,4 +34,12 @@ public class ArticleType implements java.io.Serializable{
 		return this.remark;
 	}
 
+	@Override
+	public String toString() {
+		return "ArticleType{" +
+				"code='" + code + '\'' +
+				", name='" + name + '\'' +
+				", remark='" + remark + '\'' +
+				'}';
+	}
 }
