@@ -2,6 +2,7 @@ package com.zhangflg.shop.repository;
 
 import com.zhangflg.shop.bean.ArticleType;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @Email dlei0009@163.com
  * @date 2018-04-26 11:54:00
  */
+@Repository
 public interface ArticleTypeMapper {
 
     @Select("select * from ec_article_type")
