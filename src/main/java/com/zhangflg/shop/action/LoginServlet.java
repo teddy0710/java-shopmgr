@@ -6,7 +6,6 @@ import com.zhangflg.shop.utils.Constants;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +24,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        // 获取sping的容器。然后从容器中得到业务层对象
+        // 获取spring的容器。然后从容器中得到业务层对象
         ServletContext servletContext = this.getServletContext();
         WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(servletContext);
         shopService = (ShopService) context.getBean("shopService");
@@ -56,12 +55,18 @@ public class LoginServlet extends HttpServlet {
         Map<String, Object> results = shopService.login(loginName, passWord);
         switch ((int) results.get("code")) {
             case 0:
+                //登录成功
+                User user = (User) results.get("msg");
+                request.setAttribute(Constants.USER_SESSION, user);
+                //测试：跳转主页面
+                //request.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(request, response);
+
+                //跳转到获取主页面数据的servlet
                 try {
-                    //登录成功
-                    User user = (User) results.get("msg");
-                    request.setAttribute(Constants.USER_SESSION, user);
-                    request.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(request, response);
-                } catch (ServletException | IOException e) {
+                    String url = request.getContextPath() + "/list";
+                    System.out.println("LoginServlet》response.sendRedirect(url)：" + url);
+                    response.sendRedirect(url);
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;

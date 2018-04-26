@@ -1,5 +1,6 @@
 package com.zhangflg.shop.service.impl;
 
+import com.zhangflg.shop.bean.Article;
 import com.zhangflg.shop.bean.ArticleType;
 import com.zhangflg.shop.bean.User;
 import com.zhangflg.shop.repository.ArticleTypeMapper;
@@ -56,5 +57,17 @@ public class ShopServiceImpl implements ShopService {
             }
         }
         return results;
+    }
+
+    @Override
+    public List<ArticleType> loadFirstArticleType() {
+        // TODO: 2018/4/26
+        return null;
+    }
+
+    @Override
+    public List<Article> searchArticles() {
+        // TODO: 2018/4/26
+        return null;
     }
 }
