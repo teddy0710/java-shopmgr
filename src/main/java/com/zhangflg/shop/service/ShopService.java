@@ -19,4 +19,6 @@ public interface ShopService {
     List<ArticleType> loadSecondArticleType(String typeCode);
 
     void deleteById(String id);
+
+    Article getArticleById(String id);
 }

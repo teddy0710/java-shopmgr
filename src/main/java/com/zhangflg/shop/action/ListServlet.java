@@ -47,12 +47,28 @@ public class ListServlet extends HttpServlet {
                 case "deleteById":
                     deleteById();
                     break;
+                case "preArticle":
+                    preArticle();
+                    break;
 
             }
         } catch (ServletException | IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void preArticle() {
+        String id = req.getParameter("id");
+        Article article = shopService.getArticleById(id);
+        req.setAttribute("article", article);
+        try {
+            req.getRequestDispatcher("/WEB-INF/jsp/preArticle.jsp").forward(req,resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void deleteById() throws ServletException, IOException {
