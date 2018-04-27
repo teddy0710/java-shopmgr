@@ -3,6 +3,7 @@ package com.zhangflg.shop.action;
 import com.zhangflg.shop.bean.Article;
 import com.zhangflg.shop.bean.ArticleType;
 import com.zhangflg.shop.service.ShopService;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -18,6 +19,8 @@ import java.util.List;
 @WebServlet("/list")
 public class ListServlet extends HttpServlet {
     private ShopService shopService;
+    private HttpServletRequest req;
+    private HttpServletResponse resp;
 
     @Override
     public void init() throws ServletException {
@@ -30,16 +33,44 @@ public class ListServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        this.req = req;
+        this.resp = resp;
+        String method = req.getParameter("method");
+        try {
+            switch (method) {
+                case "getAll":
+                    getAll();
+                    break;
+
+            }
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void getAll() throws ServletException, IOException {
+        //接受一级类型编号 查询
+        String typeCode = req.getParameter("typeCode");
+        //根据一级类型查询二级类型
+        if (!StringUtils.isEmpty(typeCode)) {
+            List<ArticleType> secondArticleTypes = shopService.loadSecondArticleType(typeCode);
+            req.setAttribute("secondTypes", secondArticleTypes);
+        }
+
         //查询所有一级类型数据
         List<ArticleType> firstArticleTypes = shopService.loadFirstArticleType();
         //查询所有的商品信息
-        List<Article> articles = shopService.searchArticles();
+        List<Article> articles = shopService.searchArticles(typeCode);
 
         req.setAttribute("firstArticleTypes", firstArticleTypes);
         req.setAttribute("articles", articles);
 
         //查询完成，跳转首页
-        req.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(req,resp);
+
+        req.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(req, resp);
+
+
     }
 
 }

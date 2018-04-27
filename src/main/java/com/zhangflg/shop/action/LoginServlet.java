@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
 
                 //跳转到获取主页面数据的servlet
                 try {
-                    String url = request.getContextPath() + "/list";
+                    String url = request.getContextPath() + "/list?method=getAll";
                     System.out.println("LoginServlet》response.sendRedirect(url)：" + url);
                     response.sendRedirect(url);
                 } catch (IOException e) {

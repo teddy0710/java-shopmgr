@@ -1,6 +1,7 @@
 package com.zhangflg.shop.repository;
 
 import com.zhangflg.shop.bean.ArticleType;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -22,4 +23,7 @@ public interface ArticleTypeMapper {
 
     @Select("select * from ec_article_type where length(code)=4")
     List<ArticleType> getFirstArticleType();
+
+    @Select("select * from ec_article_type where code like #{typeCode} and length(code)=#{length}")
+    List<ArticleType> getSecondArticleType(@Param("typeCode") String typeCode, @Param("length") int length);
 }

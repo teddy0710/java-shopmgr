@@ -65,13 +65,16 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<ArticleType> loadFirstArticleType() {
-        List<ArticleType> articleTypes = articleTypeMapper.getFirstArticleType();
-        return articleTypes;
+        return articleTypeMapper.getFirstArticleType();
     }
 
     @Override
-    public List<Article> searchArticles() {
-        List<Article> articles  = articleMapper.searchArticles();
-        return articles;
+    public List<Article> searchArticles(String typeCode) {
+        return articleMapper.searchArticles(typeCode);
+    }
+
+    @Override
+    public List<ArticleType> loadSecondArticleType(String typeCode) {
+        return articleTypeMapper.getSecondArticleType(typeCode+"%",typeCode.length()+4);
     }
 }

@@ -6,6 +6,11 @@
 <mapper namespace="com.zhangflg.shop.repository.ArticleMapper">
 
     <select id="searchArticles" resultType="Article">
-		SELECT * FROM ec_article
-	</select>
+        SELECT * FROM ec_article
+        <where>
+            <if test="typeCode!=null&amp;&amp;typeCode!=''">
+                AND type_code like CONCAT("",#{typeCode},"%")
+            </if>
+        </where>
+    </select>
 </mapper>
