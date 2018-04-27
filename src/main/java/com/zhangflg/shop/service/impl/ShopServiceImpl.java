@@ -7,6 +7,7 @@ import com.zhangflg.shop.repository.ArticleMapper;
 import com.zhangflg.shop.repository.ArticleTypeMapper;
 import com.zhangflg.shop.repository.UserMapper;
 import com.zhangflg.shop.service.ShopService;
+import com.zhangflg.shop.utils.Pager;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -69,12 +70,19 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public List<Article> searchArticles(String typeCode, String secondType, String title) {
-        return articleMapper.searchArticles(typeCode,secondType,title);
+    public List<Article> searchArticles(String typeCode, String secondType, String title, Pager pager) {
+        int count = articleMapper.count(typeCode, secondType, title);
+        pager.setTotalCount(count);
+        return articleMapper.searchArticles(typeCode, secondType, title, pager);
     }
 
     @Override
     public List<ArticleType> loadSecondArticleType(String typeCode) {
-        return articleTypeMapper.getSecondArticleType(typeCode+"%",typeCode.length()+4);
+        return articleTypeMapper.getSecondArticleType(typeCode + "%", typeCode.length() + 4);
+    }
+
+    @Override
+    public void deleteById(String id) {
+        articleMapper.deleteById(id);
     }
 }

@@ -5,8 +5,7 @@
 
 <mapper namespace="com.zhangflg.shop.repository.ArticleMapper">
 
-    <select id="searchArticles" resultType="Article">
-        SELECT * FROM ec_article
+    <sql id="pageWhere">
         <where>
             <if test="typeCode!=null&amp;&amp;typeCode!=''">
                 AND type_code like CONCAT("",#{typeCode},"%")
@@ -20,5 +19,15 @@
                 AND title LIKE CONCAT("%",#{title},"%")
             </if>
         </where>
+    </sql>
+    <select id="searchArticles" resultType="Article">
+        SELECT * FROM ec_article
+        <include refid="pageWhere"></include>
+        limit #{pager.firstParam},#{pager.pageSize}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT count(*) FROM ec_article
+        <include refid="pageWhere"></include>
     </select>
 </mapper>

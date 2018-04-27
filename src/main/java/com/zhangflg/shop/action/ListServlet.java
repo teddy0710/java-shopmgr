@@ -3,10 +3,12 @@ package com.zhangflg.shop.action;
 import com.zhangflg.shop.bean.Article;
 import com.zhangflg.shop.bean.ArticleType;
 import com.zhangflg.shop.service.ShopService;
+import com.zhangflg.shop.utils.Pager;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,6 +44,9 @@ public class ListServlet extends HttpServlet {
                 case "getAll":
                     getAll();
                     break;
+                case "deleteById":
+                    deleteById();
+                    break;
 
             }
         } catch (ServletException | IOException e) {
@@ -50,7 +55,26 @@ public class ListServlet extends HttpServlet {
 
     }
 
+    private void deleteById() throws ServletException, IOException {
+        try {
+            String id = req.getParameter("id");
+            shopService.deleteById(id);
+            req.setAttribute("tip", "删除成功");
+        } catch (Exception e) {
+            req.setAttribute("tip", "删除失败");
+            e.printStackTrace();
+        }
+        req.getRequestDispatcher("/list?method=getAll").forward(req, resp);
+
+    }
+
     private void getAll() throws ServletException, IOException {
+        //分页查询
+        Pager pager = new Pager();
+        String pageIndex = req.getParameter("pageIndex");
+        if (!StringUtils.isEmpty(pageIndex)) {
+            pager.setPageIndex(Integer.parseInt(pageIndex));
+        }
         //接受一级类型编号 查询
         String typeCode = req.getParameter("typeCode");
         //接受er级类型编号 查询
@@ -70,10 +94,11 @@ public class ListServlet extends HttpServlet {
         //查询所有一级类型数据
         List<ArticleType> firstArticleTypes = shopService.loadFirstArticleType();
         //查询所有的商品信息
-        List<Article> articles = shopService.searchArticles(typeCode, secondType, title);
+        List<Article> articles = shopService.searchArticles(typeCode, secondType, title, pager);
 
         req.setAttribute("firstArticleTypes", firstArticleTypes);
         req.setAttribute("articles", articles);
+        req.setAttribute("pager", pager);
 
         //查询完成，跳转首页
 
