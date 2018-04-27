@@ -33,6 +33,7 @@ public class ListServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         this.req = req;
         this.resp = resp;
         String method = req.getParameter("method");
@@ -52,16 +53,24 @@ public class ListServlet extends HttpServlet {
     private void getAll() throws ServletException, IOException {
         //接受一级类型编号 查询
         String typeCode = req.getParameter("typeCode");
+        //接受er级类型编号 查询
+        String secondType = req.getParameter("secondType");
+
+        //接收商品标题
+        String title = req.getParameter("title");
+        req.setAttribute("secondType", secondType);
+        req.setAttribute("title", title);
         //根据一级类型查询二级类型
         if (!StringUtils.isEmpty(typeCode)) {
             List<ArticleType> secondArticleTypes = shopService.loadSecondArticleType(typeCode);
+            req.setAttribute("typeCode", typeCode);
             req.setAttribute("secondTypes", secondArticleTypes);
         }
 
         //查询所有一级类型数据
         List<ArticleType> firstArticleTypes = shopService.loadFirstArticleType();
         //查询所有的商品信息
-        List<Article> articles = shopService.searchArticles(typeCode);
+        List<Article> articles = shopService.searchArticles(typeCode, secondType, title);
 
         req.setAttribute("firstArticleTypes", firstArticleTypes);
         req.setAttribute("articles", articles);

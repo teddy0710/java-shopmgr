@@ -11,6 +11,14 @@
             <if test="typeCode!=null&amp;&amp;typeCode!=''">
                 AND type_code like CONCAT("",#{typeCode},"%")
             </if>
+
+            <if test="secondType!=null&amp;&amp;secondType!=''">
+                AND type_code = #{secondType}
+            </if>
+
+            <if test="title!=null&amp;&amp;title!=''">
+                AND title LIKE CONCAT("%",#{title},"%")
+            </if>
         </where>
     </select>
 </mapper>
