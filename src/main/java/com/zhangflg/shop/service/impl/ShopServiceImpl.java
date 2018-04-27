@@ -3,6 +3,7 @@ package com.zhangflg.shop.service.impl;
 import com.zhangflg.shop.bean.Article;
 import com.zhangflg.shop.bean.ArticleType;
 import com.zhangflg.shop.bean.User;
+import com.zhangflg.shop.repository.ArticleMapper;
 import com.zhangflg.shop.repository.ArticleTypeMapper;
 import com.zhangflg.shop.repository.UserMapper;
 import com.zhangflg.shop.service.ShopService;
@@ -19,6 +20,9 @@ public class ShopServiceImpl implements ShopService {
     //得到数据访问层对象
     @Resource
     private ArticleTypeMapper articleTypeMapper;
+
+    @Resource
+    private ArticleMapper articleMapper;
 
     @Resource
     private UserMapper userMapper;
@@ -61,13 +65,13 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<ArticleType> loadFirstArticleType() {
-        // TODO: 2018/4/26
-        return null;
+        List<ArticleType> articleTypes = articleTypeMapper.getFirstArticleType();
+        return articleTypes;
     }
 
     @Override
     public List<Article> searchArticles() {
-        // TODO: 2018/4/26
-        return null;
+        List<Article> articles  = articleMapper.searchArticles();
+        return articles;
     }
 }

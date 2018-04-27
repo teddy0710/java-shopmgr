@@ -15,11 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/login")
+@WebServlet("/list")
 public class ListServlet extends HttpServlet {
     private ShopService shopService;
-    private HttpServletRequest request;
-    private HttpServletResponse response;
 
     @Override
     public void init() throws ServletException {
@@ -32,8 +30,6 @@ public class ListServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.request = req;
-        this.response = resp;
         //查询所有一级类型数据
         List<ArticleType> firstArticleTypes = shopService.loadFirstArticleType();
         //查询所有的商品信息
@@ -41,6 +37,9 @@ public class ListServlet extends HttpServlet {
 
         req.setAttribute("firstArticleTypes", firstArticleTypes);
         req.setAttribute("articles", articles);
+
+        //查询完成，跳转首页
+        req.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(req,resp);
     }
 
 }

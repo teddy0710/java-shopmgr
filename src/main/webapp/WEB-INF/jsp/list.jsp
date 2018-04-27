@@ -50,7 +50,7 @@
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
             <div class="list-group">
                 <c:forEach items="${requestScope.firstArticleTypes }" var="type">
-                    <a href="<c:url value="/list?method=getAll&typeCode=${type.code }"/>" class="list-group-item <c:if test="${type.code eq param.typeCode or top.code eq fn:substring(param.typeCode, 0, 4) }">active</c:if>">${type.name }</a>
+                    <a href="<c:url value="/list?method=getAll&typeCode=${type.code }"/>" class="list-group-item<c:if test="${type.code eq param.typeCode or top.code eq fn:substring(param.typeCode, 0, 4) }">active</c:if>">${type.name }</a>
                 </c:forEach>
             </div>
         </div>

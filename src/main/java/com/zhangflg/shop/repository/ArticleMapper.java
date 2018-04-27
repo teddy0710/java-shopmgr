@@ -1,6 +1,9 @@
 package com.zhangflg.shop.repository;
 
+import com.zhangflg.shop.bean.Article;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * ArticleMapper 数据访问类
@@ -13,5 +16,5 @@ import org.springframework.stereotype.Repository;
 public interface ArticleMapper {
 
 
-
+    List<Article> searchArticles();
 }
