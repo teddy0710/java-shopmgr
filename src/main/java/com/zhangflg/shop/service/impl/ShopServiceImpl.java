@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,5 +90,16 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public Article getArticleById(String id) {
         return articleMapper.getArticleById(id);
+    }
+
+    @Override
+    public void updateArticle(Article article) {
+        articleMapper.update(article);
+    }
+
+    @Override
+    public void saveArticle(Article article) {
+        article.setCreateDate(new Date());
+        articleMapper.save(article);
     }
 }

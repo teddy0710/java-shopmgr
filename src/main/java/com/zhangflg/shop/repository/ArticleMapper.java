@@ -32,4 +32,8 @@ public interface ArticleMapper {
     @Select("select * from ec_article where id=#{id}")
     @ResultMap("articleResultMap")
     Article getArticleById(@Param("id") String id);
+
+    void update(Article article);
+
+    void save(Article article);
 }

@@ -23,8 +23,22 @@ public class Article implements java.io.Serializable{
 	private String typeCode;
 	private java.util.Date createDate;
 	private String disabled;
+	private ArticleType articleType;
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public ArticleType getArticleType() {
+		return articleType;
+	}
+
+	public void setArticleType(ArticleType articleType) {
+		this.articleType = articleType;
+	}
 
 	/** setter and getter method */
+
 	public void setId(int id){
 		this.id = id;
 	}
